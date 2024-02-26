@@ -1,3 +1,5 @@
+import React from "react";
+
 import {
   AuthBindings,
   Authenticated,
@@ -7,7 +9,7 @@ import { DevtoolsProvider } from "@refinedev/devtools";
 
 import {
   ErrorComponent,
-  ThemedLayoutV2,
+  // ThemedLayoutV2,
 } from "@refinedev/mui";
 
 import routerBindings, {
@@ -22,7 +24,8 @@ import { Login } from "pages/login";
 import { Dashboard } from "pages/dashboard";
 import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom";
 import { parseJwt } from "utils/parse-jwt";
-import { Header } from "./components/header";
+// import { Header } from "./components/header";
+
 
 const axiosInstance = axios.create();
 axiosInstance.interceptors.request.use((config) => {
@@ -133,11 +136,10 @@ function App() {
                         fallback={<CatchAllNavigate to="/login" />}
                       >
                         <Dashboard />
-                        <ThemedLayoutV2
-                          Header={() => <Header isSticky={true} />}
-                        >
+                        {/* SIDE PANEL CONTAINING LOG OUT BUTTON */}
+                        {/* <ThemedLayoutV2>
                           <Outlet />
-                        </ThemedLayoutV2>
+                        </ThemedLayoutV2> */}
                       </Authenticated>
                     }
                   >
