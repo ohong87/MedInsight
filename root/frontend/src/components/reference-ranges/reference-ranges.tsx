@@ -9,18 +9,20 @@ export interface BarChartProps {
     lowReferencePercentage: string;
     highReferencePercentage: string;
     userValue: string;
+    description: string;
   }
 
 interface ReferenceRangesProps {
-    id: number;
     props: BarChartProps;
 }
 
-export const ReferenceRanges: React.FC<ReferenceRangesProps> = ({ id, props }) => {
+export const ReferenceRanges: React.FC<ReferenceRangesProps> = ({ props }) => {
     const [lowReference, setLowReference] = useState(props?.lowReferencePercentage);
     const [highReference, setHighReference] = useState(props?.highReferencePercentage);   
 
-    if(props === undefined) { return }
+    if(props === undefined) {
+        return;
+     }
 
     const handleLowReferenceChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const value: number = Number(event.target.value);
@@ -43,14 +45,7 @@ export const ReferenceRanges: React.FC<ReferenceRangesProps> = ({ id, props }) =
     };
 
     return (
-        <Box sx={{ 
-            backgroundColor: '#fff', 
-            height: 250, 
-            maxWidth: 500, 
-            borderRadius: '8px',
-            overflow: 'hidden', // Add this line
-            position: 'relative' // Add this line
-        }}>
+        <Box sx={{ backgroundColor: '#fff', height: 250, maxWidth: 500, borderRadius: '8px', overflow: 'hidden', position: 'relative' }}>
             {/* HEADER */}
             <Typography variant="h6" component="div" sx={{ ml: 2.2, pt:1, pb:2 }}>
                 {props.title}
