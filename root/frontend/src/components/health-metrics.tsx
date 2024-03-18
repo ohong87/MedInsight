@@ -1,25 +1,39 @@
-import React, { useState } from 'react';
+import React, { Dispatch, SetStateAction, useState } from 'react';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import Checkbox from '@mui/material/Checkbox';
 
-export const HealthMetricsPanel = () => {
+export interface HealthMetricsPanelProps {
+    onSelectionChange: Dispatch<SetStateAction<never[] | number[]>>;
+            data: { name: string; description: string; }[]; // Update the type of the data prop
+}
 
-    const data = Array.from({ length: 30 }, (_, i) => ({
-        name: i % 2 === 0 ? 'WBC(10^3.UL)' : 'RBC (10^6/uL)',
-        description: 'Measure the number of immune cells crucial for body defense.'
-    }));
+export const HealthMetricsPanel: React.FC<HealthMetricsPanelProps> = ({ onSelectionChange, data }) => {
+
+    // const data = Array.from({ length: 30 }, (_, i) => ({
+    //     name: i % 2 === 0 ? 'WBC(10^3.UL)' : 'RBC (10^6/uL)',
+    //     description: 'Measure the number of immune cells crucial for body defense.'
+    // }));
 
     const [selectedItems, setSelectedItems] = useState<number[]>([]);
+    
 
     const handleSelect = (index: number) => {
         if (selectedItems.includes(index)) {
-            setSelectedItems(selectedItems.filter(item => item !== index));
+            setSelectedItems(prevItems => {
+                const newItems = prevItems.filter(item => item !== index);
+                onSelectionChange(newItems); // Call onSelectionChange with the new array
+                return newItems;
+            });
         } else {
             if (selectedItems.length < 3) {
-                setSelectedItems([...selectedItems, index]);
+                setSelectedItems(prevItems => {
+                    const newItems = [...prevItems, index];
+                    onSelectionChange(newItems); // Call onSelectionChange with the new array
+                    return newItems;
+                });
             }
         }
     };
@@ -27,8 +41,8 @@ export const HealthMetricsPanel = () => {
     return (
         <Box
             sx={{
-                width: '35%',
-                height: '73%',
+                width: '100',
+                height: '100%',
                 overflow: 'auto',
                 display: 'flex',
                 flexDirection: 'column',
@@ -36,14 +50,14 @@ export const HealthMetricsPanel = () => {
                 '&::-webkit-scrollbar': {
                     display: 'none',
                 },
-                '-ms-overflow-style': 'none',  // IE and Edge
-                'scrollbar-width': 'none',  // Firefox
+                'msOverflowStyle': 'none',  // IE and Edge
+                'scrollbarWidth': 'none',  // Firefox
             }}
         >
             <Paper elevation={3}>
                 <Grid container sx={{ backgroundColor: '#E7E7E7' }}>
                     <Grid item xs={2}> {/* Increase the width here */}
-                        <Typography variant="h6" sx={{ fontSize: '1rem' }}>Select</Typography>
+                        <Typography variant="h6" sx={{ fontSize: '1rem', pl:1.5 }}>Select</Typography>
                     </Grid>
                     <Grid item xs={4}> {/* Decrease the width here */}
                         <Typography variant="h6" sx={{ fontSize: '1rem' }}>Name</Typography>

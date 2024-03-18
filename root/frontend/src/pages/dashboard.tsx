@@ -1,16 +1,51 @@
-import React from "react";
-import { Box, Stack, Grid } from "@mui/material";
+import React, { useState } from "react";
+import { Box, Stack } from "@mui/material";
 
 import { Welcome } from "../components/welcome";
 import { NavigationItem } from "../components/navigation-item";
-import { HealthMetricsPanel } from "../components/health-metrics";
+import { HealthMetricsPanel } from "components/health-metrics";
+import { BarChartProps, ReferenceRanges } from "components/reference-ranges/reference-ranges";
+import { Chart } from "components/chart/chart";
 
 import home from "../icons/home.png";
 import uploadFile from "../icons/upload.png";
 import logout from "../icons/logout.png";
-import { ReferenceRanges } from "components/reference-ranges/reference-ranges";
+
 
 export const Dashboard: React.FC = () => {
+  const healthMetricsData = Array.from({ length: 30 }, (_, i) => ({
+    // name: i % 2 === 0 ? 'WBC(10^3.UL)' : 'RBC (10^6/uL)',
+    name: i,
+    description: 'Measure the number of immune cells crucial for body defense.'
+}));
+  const [selectedItemsCount, setSelectedItemsCount] = useState(0);
+
+  const [selectedIndices, setSelectedIndices] = useState([]);
+  
+  // const handleSelectionChange = (newCount: number) => {
+  //   setSelectedItemsCount(newCount);
+  // }
+
+  const selectedData = selectedIndices.map(index => healthMetricsData[index]);
+
+  // Map over selectedData to create an array of BarChartProps
+  const barChartPropsArray: BarChartProps[] = selectedData.map((data, index) => ({
+    id: index.toString(), // Convert the 'index' to a string
+    title: data.name.toString(), // Convert the 'name' property to a string
+    lowMedicalBound: Math.floor(Math.random() * 20).toString(),
+    highMedicalBound: Math.floor(Math.random() * 100 + 50).toString(),
+    lowReferencePercentage: Math.floor(Math.random() * 10).toString(),
+    highReferencePercentage: Math.floor(Math.random() * 10 + 80).toString(),
+    userValue: Math.floor(Math.random() * 100).toString(),
+  }));
+
+  React.useEffect(() => {
+    console.log('selectedIndices:', selectedIndices);
+    console.log('selectedData:',selectedData);
+    console.log('barChartPropsArray:',barChartPropsArray);
+    setSelectedItemsCount(selectedIndices.length)
+  }, [selectedIndices, selectedData, barChartPropsArray]);
+  
   const navItems = [
     {
       iconSrc: home,
@@ -56,11 +91,40 @@ export const Dashboard: React.FC = () => {
           <NavigationItem key={index} iconSrc={item.iconSrc} altText={item.altText} text={item.text} />
         ))}
       </Stack>
-
-        <HealthMetricsPanel/>
-        <ReferenceRanges/>
+      
+      <Box sx={{
+        display: 'flex',
+        flexDirection: 'row',
+        height: '65%',
+        gap: '50px'
+      }}>
+          <HealthMetricsPanel onSelectionChange={setSelectedIndices} data={healthMetricsData}/>
+          {selectedItemsCount > 0 && (
+            <>
+              <Box sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'flex-end',
+                gap: '10px',
+              }}>
+                {selectedIndices.length > 0 && selectedIndices?.map((index) => (
+                  <ReferenceRanges key={index} id={index} props={barChartPropsArray[index as number]} />
+                ))}
+              </Box>
+              <Box sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'flex-end',
+                gap: '10px',
+              }}>
+                {selectedIndices?.map((index) => (
+                  <Chart key={index}/>
+                ))}
+              </Box>
+            </>
+          )}
+      </Box>
     </Box>
-    
   );
 };
 
