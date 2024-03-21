@@ -45,7 +45,7 @@ export const ReferenceRanges: React.FC<ReferenceRangesProps> = ({ props }) => {
     };
 
     return (
-        <Box sx={{ backgroundColor: '#fff', height: 250, maxWidth: 500, borderRadius: '8px', overflow: 'hidden', position: 'relative' }}>
+        <Box sx={{ backgroundColor: '#fff', height: "33%", width: "100%", borderRadius: '10px', overflow: 'hidden'}}>
             {/* HEADER */}
             <Typography variant="h6" component="div" sx={{ ml: 2.2, pt:1, pb:2 }}>
                 {props.title}

@@ -6,15 +6,11 @@ const StyledBox = styled(Box)(({ theme }) => ({
     borderRadius: '10px',
     backgroundColor: '#2c4f6f',
     display: 'flex',
-    width: '90%',
+    width: '95%',
+    height: '10%',
     justifyContent: 'space-between',
     gap: '20px',
-    padding: '41px 60px',
-    [theme.breakpoints.down('md')]: {
-      maxWidth: '100%',
-      flexWrap: 'wrap',
-      padding: '0 20px',
-    },
+    padding: '1% 1% 1% 1%',
   }));
 
 export const Welcome: React.FC<{ userName: string }> = ({ userName }) => {

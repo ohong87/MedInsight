@@ -12,7 +12,6 @@ export interface HealthMetricsPanelProps {
 
 export const HealthMetricsPanel: React.FC<HealthMetricsPanelProps> = ({ onSelectionChange, data }) => {
     const [selectedItems, setSelectedItems] = useState<number[]>([]);
-    
 
     const handleSelect = (index: number) => {
         if (selectedItems.includes(index)) {
@@ -33,7 +32,7 @@ export const HealthMetricsPanel: React.FC<HealthMetricsPanelProps> = ({ onSelect
     };
 
     return (
-        <Box sx={{ width: '650px', height: '100%', overflow: 'auto', display: 'flex', flexDirection: 'column', borderRadius: '10px', '&::-webkit-scrollbar': { display: 'none', }, 'msOverflowStyle': 'none', 'scrollbarWidth': 'none', }} >
+        <Box sx={{ width: '100%', height: '100%', overflow: 'auto', display: 'flex', flexDirection: 'column', borderRadius: '8px', '&::-webkit-scrollbar': { display: 'none', }, 'msOverflowStyle': 'none', 'scrollbarWidth': 'none', }} >
             <Paper elevation={3}>
                 <Grid container sx={{ backgroundColor: '#E7E7E7' }}>
                     <Grid item xs={2}> {/* Increase the width here */}

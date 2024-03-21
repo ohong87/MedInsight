@@ -241,17 +241,18 @@ const navItems = [
   }, [selectedIndices, selectedData]);
 
   return (
-    <Box sx={{ height: "100vh", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", backgroundColor: "#E1E7EC", width: "100%", }} >
+    <Box sx={{ height: "100vh", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", backgroundColor: "#E1E7EC", width: "100vw"}} >
       <Welcome userName="John Doe" />
-      <Stack direction="row" spacing={2} sx={{ mt: 4, justifyContent: "space-between", p: 2, overflowX: "auto", }} >
+      <Stack direction="row" spacing={2} sx={{ margin: "0.8% 0 0.8% 0", justifyContent: "space-between", padding:"0 0 0 0", overflowX: "auto", }} >
         {navItems.map((item, index) => ( <NavigationItem key={index} iconSrc={item.iconSrc} altText={item.altText} text={item.text} /> ))}
       </Stack>
       
-      <Box sx={{ display: 'flex', flexDirection: 'row', height: '65%', gap: '50px' }}>
-        <HealthMetricsPanel onSelectionChange={setSelectedIndices as Dispatch<SetStateAction<number[]>>} data={healthMetricsData.map(data => ({...data, name: data.title.toString()}))}/>
+      <Box sx={{ display: 'flex', flexDirection: 'row', height: '75%', width: '97%', gap: '1%', justifyContent: "center" }}>
+          <HealthMetricsPanel onSelectionChange={setSelectedIndices as Dispatch<SetStateAction<number[]>>} data={healthMetricsData.map(data => ({ ...data, name: data.title.toString() }))} />
+        
           {selectedIndices.length > 0 && (
             <>
-              <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '10px', }}>
+              <Box sx={{ width: "35%", display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '10px'}}>
                 {selectedIndices.length > 0 && 
                   selectedData.map((data, index) => {
                     // console.log(`selectedData ${index}`, data, '\n');
