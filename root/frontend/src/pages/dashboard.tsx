@@ -215,24 +215,6 @@ export const Dashboard: React.FC = () => {
   // Note: Due to the text limit, assume the continuation follows the same structure for remaining items.
 ];
 
-const navItems = [
-  {
-    iconSrc: home,
-    altText: "Dashboard",
-    text: "Dashboard"
-  },
-  {
-    iconSrc: uploadFile,
-    altText: "Upload File",
-    text: "Upload File"
-  },
-  {
-    iconSrc: logout,
-    altText: "Login/Logout",
-    text: "Login/Logout"
-  },
-];
-
   const [selectedIndices, setSelectedIndices] = useState([]);
   const selectedData = selectedIndices.map(index => healthMetricsData[index]);
 
@@ -240,12 +222,68 @@ const navItems = [
     // console.log('selectedData:',selectedData);
   }, [selectedIndices, selectedData]);
 
+  const handleFileUpload = (file: File) => {
+    const formData = new FormData();
+    formData.append('file', file); // Adjust 'file' if your backend expects a different key
+    console.log('formData: ', formData);
+    // Replace 'YOUR_BACKEND_ENDPOINT' with your actual upload endpoint
+    // fetch('YOUR_BACKEND_ENDPOINT', {
+    //   method: 'POST',
+    //   body: formData,
+    //   // Include any necessary headers here
+    // })
+    // .then(response => response.json())
+    // .then(data => {
+    //   console.log('Success:', data);
+    // })
+    // .catch((error) => {
+    //   console.error('Error:', error);
+    // });
+  };
+  
+  const onUploadClick = () => {
+    document.getElementById('hiddenFileInput')?.click();
+  };
+
+  const navItems = [
+  {
+    iconSrc: home,
+    altText: "Dashboard",
+    text: "Dashboard", 
+    onClick: () => { console.log("Dashboard clicked"); /* Your logic here */ }
+  },
+  {
+    iconSrc: uploadFile,
+    altText: "Upload File",
+    text: "Upload File", 
+    onClick: onUploadClick
+  },
+  {
+    iconSrc: logout,
+    altText: "Login/Logout",
+    text: "Login/Logout", 
+    onClick: () => { console.log("Login clicked"); /* Your logic here */ }
+  },
+];
+
   return (
     <Box sx={{ height: "100vh", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", backgroundColor: "#E1E7EC", width: "100vw"}} >
       <Welcome userName="John Doe" />
       <Stack direction="row" spacing={2} sx={{ margin: "0.8% 0 0.8% 0", justifyContent: "space-between", padding:"0 0 0 0", overflowX: "auto", }} >
-        {navItems.map((item, index) => ( <NavigationItem key={index} iconSrc={item.iconSrc} altText={item.altText} text={item.text} /> ))}
+        {navItems.map((item, index) => ( <NavigationItem key={index} iconSrc={item.iconSrc} altText={item.altText} text={item.text} onClick={item.onClick} /> ))}
       </Stack>
+
+        <input
+        type="file"
+        id="hiddenFileInput"
+        style={{ display: 'none' }}
+        onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+          const file = event.target.files ? event.target.files[0] : null;
+          if (file) {
+            handleFileUpload(file);
+          }
+        }}
+      />
       
       <Box sx={{ display: 'flex', flexDirection: 'row', height: '75%', width: '97%', gap: '1%', justifyContent: "center" }}>
           <HealthMetricsPanel onSelectionChange={setSelectedIndices as Dispatch<SetStateAction<number[]>>} data={healthMetricsData.map(data => ({ ...data, name: data.title.toString() }))} />
