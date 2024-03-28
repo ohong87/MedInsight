@@ -8,11 +8,13 @@ import { ReferenceRanges } from "components/reference-ranges/reference-ranges";
 import { Chart } from "components/chart/chart";
 
 import home from "../icons/home.png";
+import { useLogout } from "@refinedev/core";
 import uploadFile from "../icons/upload.png";
 import logout from "../icons/logout.png";
 
 
 export const Dashboard: React.FC = () => {
+  const { mutate: logOut } = useLogout();
   const healthMetricsData = [
   {
     title: "WBC (10^3.UL)",
@@ -217,17 +219,21 @@ export const Dashboard: React.FC = () => {
 
   const [selectedIndices, setSelectedIndices] = useState([]);
   const selectedData = selectedIndices.map(index => healthMetricsData[index]);
+  const [userName, setUserName] = useState<string>('');
 
   useEffect(() => {
-    // console.log('selectedData:',selectedData);
+    const userString = localStorage.getItem("user");
+    if (userString) {
+      const user = JSON.parse(userString);
+      setUserName(user.given_name); // Assuming the name is stored under the key 'name'
+    }
   }, [selectedIndices, selectedData]);
 
   const handleFileUpload = (file: File) => {
     const formData = new FormData();
     formData.append('file', file); // Adjust 'file' if your backend expects a different key
     console.log('formData: ', formData);
-    // Replace 'YOUR_BACKEND_ENDPOINT' with your actual upload endpoint
-    // fetch('YOUR_BACKEND_ENDPOINT', {
+    // fetch('ENDPOINT', {
     //   method: 'POST',
     //   body: formData,
     //   // Include any necessary headers here
@@ -247,12 +253,6 @@ export const Dashboard: React.FC = () => {
 
   const navItems = [
   {
-    iconSrc: home,
-    altText: "Dashboard",
-    text: "Dashboard", 
-    onClick: () => { console.log("Dashboard clicked"); /* Your logic here */ }
-  },
-  {
     iconSrc: uploadFile,
     altText: "Upload File",
     text: "Upload File", 
@@ -260,15 +260,15 @@ export const Dashboard: React.FC = () => {
   },
   {
     iconSrc: logout,
-    altText: "Login/Logout",
-    text: "Login/Logout", 
-    onClick: () => { console.log("Login clicked"); /* Your logic here */ }
+    altText: "Logout",
+    text: "Logout", 
+    onClick: () => logOut()
   },
-];
+  ];
 
   return (
     <Box sx={{ height: "100vh", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", backgroundColor: "#E1E7EC", width: "100vw"}} >
-      <Welcome userName="John Doe" />
+      <Welcome userName={userName} />
       <Stack direction="row" spacing={2} sx={{ margin: "0.8% 0 0.8% 0", justifyContent: "space-between", padding:"0 0 0 0", overflowX: "auto", }} >
         {navItems.map((item, index) => ( <NavigationItem key={index} iconSrc={item.iconSrc} altText={item.altText} text={item.text} onClick={item.onClick} /> ))}
       </Stack>

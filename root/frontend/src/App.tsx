@@ -55,7 +55,7 @@ function App() {
 
         return {
           success: true,
-          redirectTo: "/dashboard",
+          redirectTo: "/",
         };
       }
 
@@ -136,10 +136,6 @@ function App() {
                         fallback={<CatchAllNavigate to="/login" />}
                       >
                         <Dashboard />
-                        {/* SIDE PANEL CONTAINING LOG OUT BUTTON */}
-                        {/* <ThemedLayoutV2>
-                          <Outlet />
-                        </ThemedLayoutV2> */}
                       </Authenticated>
                     }
                   >
