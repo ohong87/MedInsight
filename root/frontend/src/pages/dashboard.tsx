@@ -8,11 +8,13 @@ import { ReferenceRanges } from "components/reference-ranges/reference-ranges";
 import { Chart } from "components/chart/chart";
 
 import home from "../icons/home.png";
+import { useLogout } from "@refinedev/core";
 import uploadFile from "../icons/upload.png";
 import logout from "../icons/logout.png";
 
 
 export const Dashboard: React.FC = () => {
+  const { mutate: logOut } = useLogout();
   const healthMetricsData = [
   {
     title: "WBC (10^3.UL)",
@@ -215,37 +217,73 @@ export const Dashboard: React.FC = () => {
   // Note: Due to the text limit, assume the continuation follows the same structure for remaining items.
 ];
 
-const navItems = [
-  {
-    iconSrc: home,
-    altText: "Dashboard",
-    text: "Dashboard"
-  },
+  const [selectedIndices, setSelectedIndices] = useState([]);
+  const selectedData = selectedIndices.map(index => healthMetricsData[index]);
+  const [userName, setUserName] = useState<string>('');
+
+  useEffect(() => {
+    const userString = localStorage.getItem("user");
+    if (userString) {
+      const user = JSON.parse(userString);
+      setUserName(user.given_name); // Assuming the name is stored under the key 'name'
+    }
+  }, [selectedIndices, selectedData]);
+
+  const handleFileUpload = (file: File) => {
+    const formData = new FormData();
+    formData.append('file', file); // Adjust 'file' if your backend expects a different key
+    console.log('formData: ', formData);
+    // fetch('ENDPOINT', {
+    //   method: 'POST',
+    //   body: formData,
+    //   // Include any necessary headers here
+    // })
+    // .then(response => response.json())
+    // .then(data => {
+    //   console.log('Success:', data);
+    // })
+    // .catch((error) => {
+    //   console.error('Error:', error);
+    // });
+  };
+  
+  const onUploadClick = () => {
+    document.getElementById('hiddenFileInput')?.click();
+  };
+
+  const navItems = [
   {
     iconSrc: uploadFile,
     altText: "Upload File",
-    text: "Upload File"
+    text: "Upload File", 
+    onClick: onUploadClick
   },
   {
     iconSrc: logout,
-    altText: "Login/Logout",
-    text: "Login/Logout"
+    altText: "Logout",
+    text: "Logout", 
+    onClick: () => logOut()
   },
-];
-
-  const [selectedIndices, setSelectedIndices] = useState([]);
-  const selectedData = selectedIndices.map(index => healthMetricsData[index]);
-
-  useEffect(() => {
-    // console.log('selectedData:',selectedData);
-  }, [selectedIndices, selectedData]);
+  ];
 
   return (
     <Box sx={{ height: "100vh", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", backgroundColor: "#E1E7EC", width: "100vw"}} >
-      <Welcome userName="John Doe" />
+      <Welcome userName={userName} />
       <Stack direction="row" spacing={2} sx={{ margin: "0.8% 0 0.8% 0", justifyContent: "space-between", padding:"0 0 0 0", overflowX: "auto", }} >
-        {navItems.map((item, index) => ( <NavigationItem key={index} iconSrc={item.iconSrc} altText={item.altText} text={item.text} /> ))}
+        {navItems.map((item, index) => ( <NavigationItem key={index} iconSrc={item.iconSrc} altText={item.altText} text={item.text} onClick={item.onClick} /> ))}
       </Stack>
+
+        <input
+        type="file"
+        id="hiddenFileInput"
+        style={{ display: 'none' }}
+        onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+          const file = event.target.files ? event.target.files[0] : null;
+          if (file) {
+            handleFileUpload(file);
+          }
+        }}
+      />
       
       <Box sx={{ display: 'flex', flexDirection: 'row', height: '75%', width: '97%', gap: '1%', justifyContent: "center" }}>
           <HealthMetricsPanel onSelectionChange={setSelectedIndices as Dispatch<SetStateAction<number[]>>} data={healthMetricsData.map(data => ({ ...data, name: data.title.toString() }))} />
