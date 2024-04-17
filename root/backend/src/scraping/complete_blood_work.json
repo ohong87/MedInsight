@@ -1,0 +1,362 @@
+{
+    "WBC (10^3.UL)": [
+        {
+            "LowRef": 4.5,
+            "HighRef": 12.5,
+            "MyLowRef": 4.725,
+            "MyHighRef": 11.25,
+            "Observation": 7.0
+        }
+    ],
+    "RBC (10^6/uL)": [
+        {
+            "LowRef": 3.8,
+            "HighRef": 5.2,
+            "MyLowRef": 3.99,
+            "MyHighRef": 4.68,
+            "Observation": 5.13
+        }
+    ],
+    "PLATELETS (10^3/uL)": [
+        {
+            "LowRef": 130.0,
+            "HighRef": 440.0,
+            "MyLowRef": 136.5,
+            "MyHighRef": 396.0,
+            "Observation": 297.0
+        }
+    ],
+    "MCV (fL)": [
+        {
+            "LowRef": 78.0,
+            "HighRef": 98.0,
+            "MyLowRef": 81.9,
+            "MyHighRef": 88.2,
+            "Observation": 89.7
+        }
+    ],
+    "MCHC (g/dL)": [
+        {
+            "LowRef": 32.0,
+            "HighRef": 36.0,
+            "MyLowRef": 33.6,
+            "MyHighRef": 32.4,
+            "Observation": 33.9
+        }
+    ],
+    "MCH (pg)": [
+        {
+            "LowRef": 26.0,
+            "HighRef": 34.0,
+            "MyLowRef": 27.3,
+            "MyHighRef": 30.6,
+            "Observation": 30.4
+        }
+    ],
+    "HGB (g/dL)": [
+        {
+            "LowRef": 11.9,
+            "HighRef": 15.2,
+            "MyLowRef": 12.495,
+            "MyHighRef": 13.68,
+            "Observation": 15.6
+        }
+    ],
+    "HCT (%)": [
+        {
+            "LowRef": 35.0,
+            "HighRef": 45.0,
+            "MyLowRef": 36.75,
+            "MyHighRef": 40.5,
+            "Observation": 46.0
+        }
+    ],
+    "RDW (%)": [
+        {
+            "LowRef": 12.1,
+            "HighRef": 17.9,
+            "MyLowRef": 12.705,
+            "MyHighRef": 16.11,
+            "Observation": 13.5
+        }
+    ],
+    "NEUTROPHILS (%)": [
+        {
+            "LowRef": 37.0,
+            "HighRef": 80.0,
+            "MyLowRef": 38.85,
+            "MyHighRef": 72.0,
+            "Observation": 56.8
+        }
+    ],
+    "LYMPHOCYTES (%)": [
+        {
+            "LowRef": 20.0,
+            "HighRef": 50.0,
+            "MyLowRef": 21.0,
+            "MyHighRef": 45.0,
+            "Observation": 31.2
+        }
+    ],
+    "MONOCYTES (%)": [
+        {
+            "LowRef": 0.0,
+            "HighRef": 11.0,
+            "MyLowRef": 0.0,
+            "MyHighRef": 9.9,
+            "Observation": 6.5
+        }
+    ],
+    "EOSINOPHILS (%)": [
+        {
+            "LowRef": 0.0,
+            "HighRef": 6.0,
+            "MyLowRef": 0.0,
+            "MyHighRef": 5.4,
+            "Observation": 4.2
+        }
+    ],
+    "BASOPHILS (%)": [
+        {
+            "LowRef": 0.0,
+            "HighRef": 2.0,
+            "MyLowRef": 0.0,
+            "MyHighRef": 1.8,
+            "Observation": 1.0
+        }
+    ],
+    "NUCLEATED RBC (WBC)": [
+        {
+            "LowRef": 0.0,
+            "HighRef": 0.2,
+            "MyLowRef": 0.0,
+            "MyHighRef": 0.18,
+            "Observation": 0.0
+        }
+    ],
+    "ABSOLUTE NEUTR (Cells/uL)": [
+        {
+            "LowRef": 1400.0,
+            "HighRef": 6500.0,
+            "MyLowRef": 1470.0,
+            "MyHighRef": 5850.0,
+            "Observation": 3950.0
+        }
+    ],
+    "AMSOLUTE LYMPHS (Cells/uL)": [
+        {
+            "LowRef": 850.0,
+            "HighRef": 3900.0,
+            "MyLowRef": 892.5,
+            "MyHighRef": 3510.0,
+            "Observation": 2170.0
+        }
+    ],
+    "MONOCYTES (Cells/uL)": [
+        {
+            "LowRef": 200.0,
+            "HighRef": 950.0,
+            "MyLowRef": 210.0,
+            "MyHighRef": 855.0,
+            "Observation": 450.0
+        }
+    ],
+    "EOSINOPHILS TOTAL (Cells/uL)": [
+        {
+            "LowRef": 0.0,
+            "HighRef": 500.0,
+            "MyLowRef": 0.0,
+            "MyHighRef": 450.0,
+            "Observation": 290.0
+        }
+    ],
+    "BASOPHILS TOTAL (Cells/uL)": [
+        {
+            "LowRef": 0.0,
+            "HighRef": 200.0,
+            "MyLowRef": 0.0,
+            "MyHighRef": 180.0,
+            "Observation": 70.0
+        }
+    ],
+    "ALBUMIN (g/dL)": [
+        {
+            "LowRef": 3.5,
+            "HighRef": 5.3,
+            "MyLowRef": 3.675,
+            "MyHighRef": 4.77,
+            "Observation": 4.6
+        }
+    ],
+    "TOTAL BILIRUBIN (mg/dL)": [
+        {
+            "LowRef": 0.3,
+            "HighRef": 1.3,
+            "MyLowRef": 0.315,
+            "MyHighRef": 1.17,
+            "Observation": 0.5
+        }
+    ],
+    "CALCIUM (mg/dL)": [
+        {
+            "LowRef": 8.6,
+            "HighRef": 10.3,
+            "MyLowRef": 9.03,
+            "MyHighRef": 9.27,
+            "Observation": 9.7
+        }
+    ],
+    "CHLORIDE (mEw/L)": [
+        {
+            "LowRef": 99.0,
+            "HighRef": 108.0,
+            "MyLowRef": 103.95,
+            "MyHighRef": 97.2,
+            "Observation": 101.0
+        }
+    ],
+    "CREATININE (mg/dL)": [
+        {
+            "LowRef": 0.6,
+            "HighRef": 1.5,
+            "MyLowRef": 0.63,
+            "MyHighRef": 1.35,
+            "Observation": 0.7
+        }
+    ],
+    "GFR NonAfr F (mL/min)": [
+        {
+            "LowRef": 60.0,
+            "HighRef": 150.0,
+            "MyLowRef": 63.0,
+            "MyHighRef": 135.0,
+            "Observation": 94.0
+        }
+    ],
+    "GFR Afric F (mg/min)": [
+        {
+            "LowRef": 60.0,
+            "HighRef": 150.0,
+            "MyLowRef": 63.0,
+            "MyHighRef": 135.0,
+            "Observation": 113.0
+        }
+    ],
+    "GLUCOSE (mg/dL)": [
+        {
+            "LowRef": 65.0,
+            "HighRef": 99.0,
+            "MyLowRef": 68.25,
+            "MyHighRef": 89.1,
+            "Observation": 86.0
+        }
+    ],
+    "ALK PHOSPHATASE (U/L)": [
+        {
+            "LowRef": 35.0,
+            "HighRef": 150.0,
+            "MyLowRef": 36.75,
+            "MyHighRef": 135.0,
+            "Observation": 58.0
+        }
+    ],
+    "POTASSIUM (mEq/L)": [
+        {
+            "LowRef": 3.2,
+            "HighRef": 5.5,
+            "MyLowRef": 3.36,
+            "MyHighRef": 4.95,
+            "Observation": 4.1
+        }
+    ],
+    "TOTAL PROTEIN (g/dL)": [
+        {
+            "LowRef": 6.0,
+            "HighRef": 8.3,
+            "MyLowRef": 6.3,
+            "MyHighRef": 7.47,
+            "Observation": 7.3
+        }
+    ],
+    "SODIUM (mEq/L)": [
+        {
+            "LowRef": 134.0,
+            "HighRef": 146.0,
+            "MyLowRef": 140.7,
+            "MyHighRef": 131.4,
+            "Observation": 139.0
+        }
+    ],
+    "SGOT (AST) (U/L)": [
+        {
+            "LowRef": 3.0,
+            "HighRef": 38.0,
+            "MyLowRef": 3.15,
+            "MyHighRef": 34.2,
+            "Observation": 18.0
+        }
+    ],
+    "BUN (mg/dL)": [
+        {
+            "LowRef": 8.0,
+            "HighRef": 25.0,
+            "MyLowRef": 8.4,
+            "MyHighRef": 22.5,
+            "Observation": 14.0
+        }
+    ],
+    "CO2 (mEq/L)": [
+        {
+            "LowRef": 19.0,
+            "HighRef": 32.0,
+            "MyLowRef": 19.95,
+            "MyHighRef": 28.8,
+            "Observation": 28.0
+        }
+    ],
+    "SGPT (ALT) (U/L)": [
+        {
+            "LowRef": 3.0,
+            "HighRef": 48.0,
+            "MyLowRef": 3.15,
+            "MyHighRef": 43.2,
+            "Observation": 21.0
+        }
+    ],
+    "BUN/ CREA RATIO": [
+        {
+            "LowRef": 3.0,
+            "HighRef": 40.0,
+            "MyLowRef": 3.15,
+            "MyHighRef": 36.0,
+            "Observation": 20.0
+        }
+    ],
+    "GLOBULIN (CALC) (g/dL)": [
+        {
+            "LowRef": 1.6,
+            "HighRef": 4.2,
+            "MyLowRef": 1.68,
+            "MyHighRef": 3.78,
+            "Observation": 2.7
+        }
+    ],
+    "A/G RATIO": [
+        {
+            "LowRef": 1.0,
+            "HighRef": 2.2,
+            "MyLowRef": 1.05,
+            "MyHighRef": 1.98,
+            "Observation": 1.7
+        }
+    ],
+    "ANION GAP (mEq/L)": [
+        {
+            "LowRef": 3.0,
+            "HighRef": 16.0,
+            "MyLowRef": 3.15,
+            "MyHighRef": 14.4,
+            "Observation": 10.0
+        }
+    ]
+}

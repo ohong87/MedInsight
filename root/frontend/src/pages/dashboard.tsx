@@ -221,14 +221,35 @@ export const Dashboard: React.FC = () => {
   const selectedData = selectedIndices.map(index => healthMetricsData[index]);
   const [userName, setUserName] = useState<string>('');
 
+  
   useEffect(() => {
-    const userString = localStorage.getItem("user");
-    if (userString) {
-      const user = JSON.parse(userString);
-      setUserName(user.given_name); // Assuming the name is stored under the key 'name'
+    const fetchUserData = () => {
+      const userString = localStorage.getItem("user");
+      console.log(userString);
+      if (userString) {
+        const user = JSON.parse(userString);
+        console.log(user);
+        console.log(user.given_name);
+        setUserName(user.given_name); // Assuming the name is stored under the key 'name'
+        fetchUserTests(user.given_name); //this is incorrect for now, we need to pass in the userId - Will
+      }
+    };
+    //fetches usertests in json format
+    const fetchUserTests = async (userId: string) => {
+      try {
+        const response = await fetch('https://localhost:8080/get-tests', {
+          method: 'POST',
+          body: JSON.stringify({ userId })
+        });
+        const data = await response.json();
+        console.log(data);
+      } catch(error){
+        console.error('Error fetching user tests:', error);
+      }
     }
+    fetchUserData();
   }, [selectedIndices, selectedData]);
-
+  
   const handleFileUpload = (file: File) => {
     const formData = new FormData();
     formData.append('file', file); // Adjust 'file' if your backend expects a different key
