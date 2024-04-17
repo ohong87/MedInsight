@@ -230,7 +230,7 @@ export const Dashboard: React.FC = () => {
         const user = JSON.parse(userString);
         console.log(user);
         console.log(user.given_name);
-        setUserName(user.given_name); // Assuming the name is stored under the key 'name'
+        setUserName(user.given_name);
         fetchUserTests(user.given_name); //this is incorrect for now, we need to pass in the userId - Will
       }
     };
