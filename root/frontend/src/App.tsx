@@ -7,10 +7,10 @@ import {
 } from "@refinedev/core";
 import { DevtoolsProvider } from "@refinedev/devtools";
 
-import {
-  ErrorComponent,
-  // ThemedLayoutV2,
-} from "@refinedev/mui";
+// import {
+//   ErrorComponent,
+//   // ThemedLayoutV2,
+// } from "@refinedev/mui";
 
 import routerBindings, {
   CatchAllNavigate,
@@ -140,7 +140,7 @@ function App() {
                     }
                   >
 
-                    <Route path="*" element={<ErrorComponent />} />
+                    <Route path="*" element={<Dashboard />} />
                   </Route>
                   <Route
                     element={
