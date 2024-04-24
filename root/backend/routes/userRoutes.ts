@@ -7,7 +7,7 @@ const router = express.Router();
 // Endpoint for creating a new user with an empty set of tests
 router.post('/', async (req, res) => {
     try {
-        const userId = req.body.userId;
+        const userId = req.body.uid;
         console.log(userId); // Log the received userId
         const userToAdd = new User({ uid: userId, tests: []});
         await userToAdd.save(); // Save the new user document in MongoDB
