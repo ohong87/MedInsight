@@ -1,6 +1,6 @@
 import express from 'express';
 import * as dotenv from 'dotenv';
-// import cors from 'cors'; 
+import cors from 'cors'; 
 
 // Import routes for 3 branches of operations
 import testRoutes from '../routes/testRoutes'; 
@@ -12,7 +12,9 @@ import connectDB from './mongodb/connect'; // Utility for connecting to MongoDB
 dotenv.config(); // Load environment variables from .env file
 
 const app = express(); // Create an Express application
-// app.use(cors()); 
+// enabling CORS for all requests
+app.use(cors()); 
+
 app.use(express.json({ limit: '50mb' })); // Parse JSON requests with a body limit of 50mb
 
 // Hello World endpoint to check application is functional
