@@ -220,7 +220,7 @@ export const Dashboard: React.FC = () => {
   const [selectedIndices, setSelectedIndices] = useState([]);
   const selectedData = selectedIndices.map(index => healthMetricsData[index]);
   const [userName, setUserName] = useState<string>('');
-
+  const [userId, setUserId] = useState<string | null>(null);
   
   useEffect(() => {
     const fetchUserData = () => {
@@ -234,10 +234,11 @@ export const Dashboard: React.FC = () => {
         const token: string | null = localStorage.getItem('token');
         if (token) {
             const decoded = jwtDecode(token);
-            const userId: string | undefined = decoded.sub;
-            if(userId !== undefined){
-              fetchUserTests(userId);
-              console.log("User Id: ", userId);
+            const fetchedUserId: string | undefined = decoded.sub;
+            if(fetchedUserId !== undefined){
+              setUserId(fetchedUserId);
+              fetchUserTests(fetchedUserId);
+              console.log("User Id: ", fetchedUserId);
             }
             else{
               console.error('User Id is undefined.');
@@ -266,22 +267,27 @@ export const Dashboard: React.FC = () => {
     fetchUserData();
   }, [selectedIndices, selectedData]);
   
-  const handleFileUpload = (file: File) => {
+  const handleFileUpload = async (file: File) => {
+    if (userId === null) {
+      console.error('userid is null')
+      return;
+    }
     const formData = new FormData();
-    formData.append('file', file); // Adjust 'file' if your backend expects a different key
+    formData.append('file', file);
+    formData.append('userId', userId);
     console.log('formData: ', formData);
-    // fetch('ENDPOINT', {
-    //   method: 'POST',
-    //   body: formData,
-    //   // Include any necessary headers here
-    // })
-    // .then(response => response.json())
-    // .then(data => {
-    //   console.log('Success:', data);
-    // })
-    // .catch((error) => {
-    //   console.error('Error:', error);
-    // });
+    try{
+      const response = await fetch('http://localhost:8080/userTest/scraping/', {
+        method: 'POST',
+        body: formData,
+      });
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+    }
+    catch (error) {
+      console.error('Error during file upload:', error);
+    }
   };
   
   const onUploadClick = () => {
