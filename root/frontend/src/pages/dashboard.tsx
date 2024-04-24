@@ -11,7 +11,7 @@ import home from "../icons/home.png";
 import { useLogout } from "@refinedev/core";
 import uploadFile from "../icons/upload.png";
 import logout from "../icons/logout.png";
-
+import { jwtDecode } from 'jwt-decode';
 
 export const Dashboard: React.FC = () => {
   const { mutate: logOut } = useLogout();
@@ -236,6 +236,15 @@ export const Dashboard: React.FC = () => {
     };
     //fetches usertests in json format
     const fetchUserTests = async (userId: string) => {
+      const token: string | null = localStorage.getItem('token');
+      if (token) {
+          const decoded = jwtDecode(token);
+          const userId = decoded.sub;
+          console.log("User Id: ", userId);
+      } else{
+        console.error("No Google auth token found");
+        return;
+      }
       try {
         const response = await fetch('https://localhost:8080/get-tests', {
           method: 'POST',
