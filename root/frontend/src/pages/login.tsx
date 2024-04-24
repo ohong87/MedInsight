@@ -13,8 +13,6 @@ export const Login: React.FC = () => {
   const { mutate: login } = useLogin<CredentialResponse>();
   //createUser function
   const createUser = async(userId: string) => {
-    
-
     try{
       console.log('Sending userId:',userId);
       const response = await fetch('http://localhost:8080/user',{
@@ -27,6 +25,34 @@ export const Login: React.FC = () => {
       }
     } catch (error) {
       console.error('Error creating user:', error);
+    }
+  }
+
+  const checkUserExists = async(userId: string) => {
+    try {
+      const response = await fetch('http://localhost:8080/user/get', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ userId })
+      });
+
+      if(response.status === 200) {
+        const user = await response.json();
+        console.log('User found:', user);
+        return true;
+      }
+      else if(response.status === 404) {
+        console.log('User not found');
+        return false;
+      }
+      else {
+        console.error('Unexpected error:', response.statusText);
+        return false;
+      }
+    }
+    catch(error) {
+      console.error('Error check for user existence:', error);
+      return false;
     }
   }
   const GoogleButton = (): JSX.Element => {
@@ -47,7 +73,10 @@ export const Login: React.FC = () => {
               if(userId){
                 login(res);
                 //call createUser when logging into application
-                createUser(userId);
+                const exists = checkUserExists(userId);
+                if(!exists) {
+                  createUser(userId);
+                }
               } else{
                 console.error("No userid found");
               }

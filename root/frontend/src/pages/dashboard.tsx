@@ -256,7 +256,8 @@ export const Dashboard: React.FC = () => {
       try {
         const response = await fetch('http://localhost:8080/userTest/get-tests', {
           method: 'POST',
-          body: JSON.stringify({ userId })
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ userId: userId })
         });
         const data = await response.json();
         console.log(data);
