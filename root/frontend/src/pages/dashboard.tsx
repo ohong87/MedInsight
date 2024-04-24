@@ -231,20 +231,27 @@ export const Dashboard: React.FC = () => {
         console.log(user);
         console.log(user.given_name);
         setUserName(user.given_name);
-        fetchUserTests(user.given_name); //this is incorrect for now, we need to pass in the userId - Will
+        const token: string | null = localStorage.getItem('token');
+        if (token) {
+            const decoded = jwtDecode(token);
+            const userId: string | undefined = decoded.sub;
+            if(userId !== undefined){
+              fetchUserTests(userId);
+              console.log("User Id: ", userId);
+            }
+            else{
+              console.error('User Id is undefined.');
+            }
+            
+        } else{
+          console.error("No Google auth token found");
+          return;
+        }
+        
       }
     };
     //fetches usertests in json format
     const fetchUserTests = async (userId: string) => {
-      const token: string | null = localStorage.getItem('token');
-      if (token) {
-          const decoded = jwtDecode(token);
-          const userId = decoded.sub;
-          console.log("User Id: ", userId);
-      } else{
-        console.error("No Google auth token found");
-        return;
-      }
       try {
         const response = await fetch('https://localhost:8080/get-tests', {
           method: 'POST',
