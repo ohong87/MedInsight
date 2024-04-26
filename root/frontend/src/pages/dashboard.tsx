@@ -60,8 +60,8 @@ export const Dashboard: React.FC = () => {
           body: JSON.stringify({ userId: userId })
         });
         const data = await response.json();
-        healthMetricsData = data;
-        console.log(data);
+        healthMetricsData = data.tests;
+        console.log(data.tests);
       } catch(error){
         console.error('Error fetching user tests:', error);
       }
