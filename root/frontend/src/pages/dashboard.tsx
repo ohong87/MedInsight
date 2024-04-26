@@ -15,7 +15,7 @@ import { jwtDecode } from 'jwt-decode';
 
 export const Dashboard: React.FC = () => {
   const { mutate: logOut } = useLogout();
-  var healthMetricsData: any[] = [];
+  const [healthMetricsData, setHealthMetricsData] = useState<any[]>([]);
 
   const [selectedIndices, setSelectedIndices] = useState([]);
   const selectedData = selectedIndices.map(index => healthMetricsData[index]);
@@ -60,7 +60,7 @@ export const Dashboard: React.FC = () => {
           body: JSON.stringify({ userId: userId })
         });
         const data = await response.json();
-        healthMetricsData = data.tests;
+        setHealthMetricsData(data.tests);
         console.log(data.tests);
       } catch(error){
         console.error('Error fetching user tests:', error);
@@ -131,7 +131,7 @@ export const Dashboard: React.FC = () => {
       />
       
       <Box sx={{ display: 'flex', flexDirection: 'row', height: '75%', width: '97%', gap: '1%', justifyContent: "center" }}>
-          <HealthMetricsPanel onSelectionChange={setSelectedIndices as Dispatch<SetStateAction<number[]>>} data={healthMetricsData.map(data => ({ ...data, name: data.title.toString() }))} />
+          <HealthMetricsPanel onSelectionChange={setSelectedIndices as Dispatch<SetStateAction<number[]>>} data={healthMetricsData.map(data => ({ ...data, name: data.name.toString() }))} />
         
           {selectedIndices.length > 0 && (
             <>
