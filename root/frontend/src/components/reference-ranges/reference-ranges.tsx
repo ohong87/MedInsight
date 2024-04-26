@@ -3,12 +3,12 @@ import { Box, Typography, TextField } from '@mui/material';
 import { BarChart } from './bar-chart';
 
 export interface BarChartProps {
-    title: string;
-    lowMedicalBound: string;
-    highMedicalBound: string;
-    lowReferencePercentage: string;
-    highReferencePercentage: string;
-    userValue: string;
+    name: string;
+    lowRef: string;
+    highRef: string;
+    lowRefPercentage: string;
+    highRefPercentage: string;
+    value: string;
     description: string;
   }
 
@@ -17,8 +17,8 @@ interface ReferenceRangesProps {
 }
 
 export const ReferenceRanges: React.FC<ReferenceRangesProps> = ({ props }) => {
-    const [lowReference, setLowReference] = useState(props?.lowReferencePercentage);
-    const [highReference, setHighReference] = useState(props?.highReferencePercentage);   
+    const [lowReference, setLowReference] = useState(props?.lowRefPercentage);
+    const [highReference, setHighReference] = useState(props?.highRefPercentage);   
 
     if(props === undefined) {
         return;
@@ -31,7 +31,7 @@ export const ReferenceRanges: React.FC<ReferenceRangesProps> = ({ props }) => {
         } else {
             setLowReference(event.target.value);
         }
-        props.lowReferencePercentage = lowReference;
+        props.lowRefPercentage = lowReference;
     };
     
     const handleHighReferenceChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -41,14 +41,14 @@ export const ReferenceRanges: React.FC<ReferenceRangesProps> = ({ props }) => {
         } else {
             setHighReference(event.target.value);
         }
-        props.highReferencePercentage = highReference;
+        props.highRefPercentage = highReference;
     };
 
     return (
         <Box sx={{ backgroundColor: '#fff', height: "33%", width: "100%", borderRadius: '10px', overflow: 'hidden'}}>
             {/* HEADER */}
             <Typography variant="h6" component="div" sx={{ ml: 2.2, pt:1, pb:2 }}>
-                {props.title}
+                {props.name}
             </Typography>
             {/* CONTENT SECTION */}
             <Box sx={{borderColor: '#FFFFFF', pl:2, pr:2, display: 'flex', alignItems: 'center', gap: 2 }}>
