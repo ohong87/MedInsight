@@ -26,7 +26,57 @@ export const Chart = (data: ChartData) => {
   // Contains chart's horizontal lines
   // How can I populate this so that we can see all the possible points?
   // One way I could think of is by going from 0 to the max 
-  const horizontalLinesList = [150, 140, 130, 120, 110, 100, 90, 80, 70, 60, 50, 40, 30, 20, 10, 0];
+
+  // !!!!! CHANGE THESE !!!!! //
+  let lowMedicalBound = 20;    // change this to whatever the low medical bound is on the specific test
+  let highMedicalBound = 50;  // change this to whatever the high medical bound is on the specific test
+  ////
+
+  let height = Math.ceil((highMedicalBound - lowMedicalBound) / 0.8);
+  let topLine = Math.ceil((height * 0.2 / 2) + highMedicalBound);
+  let bottomLine = Math.floor(lowMedicalBound - (height * 0.2 / 2));
+
+  // Function to calculate nice numbers for the y-axis
+  function getNiceNumber(value: number, round: boolean) {
+    const exponent = Math.floor(Math.log10(value)); // Exponent of base 10
+    const fraction = value / Math.pow(10, exponent); // Fractional part
+    let niceFraction: number;
+  
+    // Find a "nice" number to round to
+    if (round) {
+      if (fraction < 1.5) niceFraction = 1;
+      else if (fraction < 3) niceFraction = 2;
+      else if (fraction < 7) niceFraction = 5;
+      else niceFraction = 10;
+    } else {
+      if (fraction <= 1) niceFraction = 1;
+      else if (fraction <= 2) niceFraction = 2;
+      else if (fraction <= 5) niceFraction = 5;
+      else niceFraction = 10;
+    }
+  
+    return niceFraction * Math.pow(10, exponent);
+  }
+
+  // Function to calculate the y-axis intervals
+  function calculateYAxisIntervals(lowest: number, top: number, desiredIntervals: number = 5): number[] {
+    const range = getNiceNumber(top - lowest, false);
+    const step = getNiceNumber(range / desiredIntervals, true);
+    const niceLowest = Math.floor(lowest / step) * step;
+    const niceTop = Math.ceil(top / step) * step;
+    let numIntervals = Math.round((niceTop - niceLowest) / step);
+    let yAxisValues = [];
+  
+    for (let i = 0; i <= numIntervals; i++) {
+      yAxisValues.push(niceLowest + i * step);
+    }
+  
+    return yAxisValues;
+  }
+
+  const horizontalLinesList = calculateYAxisIntervals(bottomLine, topLine);
+
+  // const horizontalLinesList = [150, 140, 130, 120, 110, 100, 90, 80, 70, 60, 50, 40, 30, 20, 10, 0];
 
   // Contains chart's data points
   // Populate the userData points
@@ -40,11 +90,13 @@ export const Chart = (data: ChartData) => {
   const myHighRefInput = Number(data.props[0].highRefPercentage);
   //////////////////////////
 
-  // Sample data for low and high ref
-  const horizontalLinesHeight = horizontalLinesList[0] - horizontalLinesList[horizontalLinesList.length - 1];
-  const myLowRef = (myLowRefInput/100) * horizontalLinesHeight;
-  const myHighRef = (myHighRefInput/100) * horizontalLinesHeight;
-  const greySection = 80 - myHighRef - myLowRef;
+  // Calculate height of each section in the chart
+  height = horizontalLinesList[horizontalLinesList.length - 1] - horizontalLinesList[0];
+  let topDarkBlue = ((horizontalLinesList[horizontalLinesList.length - 1] - highMedicalBound) / height * 100);
+  let bottomDarkBlue = ((lowMedicalBound - horizontalLinesList[0]) / height * 100);
+  let myLowRef = (myLowRefInput * lowMedicalBound) / height;
+  let myHighRef = (myHighRefInput * highMedicalBound) / height;
+  let greySection = 100 - (topDarkBlue + bottomDarkBlue) - (myHighRef + myLowRef);
 
   // Calculate the SVG line segments based on data values
   const svgWidth = 700;
@@ -105,7 +157,7 @@ export const Chart = (data: ChartData) => {
             {/* Draw the chart refs */}
             <Box sx={{        // bottom dark blue box
               position: "relative", width: svgWidth - xOffset, 
-              height: "10%", 
+              height: `${bottomDarkBlue}%`, 
               mb: '20px', ml: xOffset + 'px', 
               backgroundColor: "rgba(44, 79, 111, .5)", 
               borderRadius: "0px 0px 0px 0px"
@@ -133,7 +185,7 @@ export const Chart = (data: ChartData) => {
             <Box sx={{        // top dark blue box
               position: "relative", width: svgWidth - xOffset,
               mt: '20px', ml: xOffset + 'px', 
-              height: "10%", 
+              height: `${myHighRef}%`, 
               backgroundColor: "rgba(44, 79, 111, .5)", 
               borderRadius: "0px 0px 0px 0px"
             }} />
