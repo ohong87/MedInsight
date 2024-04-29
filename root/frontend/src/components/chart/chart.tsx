@@ -1,32 +1,50 @@
 import * as React from "react";
 import { Box, Typography } from "@mui/material";
 
-export const Chart = () => {
+
+export interface ChartProps {
+  name: string;
+  value: string;
+  lowRef: string;
+  highRef: string;
+  lowRefPercentage: string;
+  highRefPercentage: string;
+  unit: string;
+  date: string;
+}
+
+export interface ChartData {
+  props: ChartProps[];
+}
+
+export const Chart = (data: ChartData) => {
 
   //////////////////////////
   // NOTICE: this section contains the data we need to change/update to make the chart work
 
+  console.log(data);
   // Contains chart's horizontal lines
-  const horizontalLinesList = [14,12,10, 8, 6, 4, 2, 0];
+  // How can I populate this so that we can see all the possible points?
+  // One way I could think of is by going from 0 to the max 
+  const horizontalLinesList = [150, 140, 130, 120, 110, 100, 90, 80, 70, 60, 50, 40, 30, 20, 10, 0];
 
   // Contains chart's data points
-  const userData = [5, 0, 2, 11, 5, 12, 0, 10];
+  // Populate the userData points
+  const userData = data.props.map(d => Number(d.value));
+
+  console.log(userData);
 
   // myLowRef and myHighRef inputs as percentage of total height of chart (need to write logic to calculate these values based on user data)
-  const myLowRefInput = 10;
-  const myHighRefInput = 12;
+  // This is assuming all of the tests of the same name have the same lowRefPrecentage and highRefPercentage
+  const myLowRefInput = Number(data.props[0].lowRefPercentage);
+  const myHighRefInput = Number(data.props[0].highRefPercentage);
   //////////////////////////
 
-
-
-  
-  
-
   // Sample data for low and high ref
-  const myLowRef = myLowRefInput;
-  const myHighRef = myHighRefInput;
+  const horizontalLinesHeight = horizontalLinesList[0] - horizontalLinesList[horizontalLinesList.length - 1];
+  const myLowRef = (myLowRefInput/100) * horizontalLinesHeight;
+  const myHighRef = (myHighRefInput/100) * horizontalLinesHeight;
   const greySection = 80 - myHighRef - myLowRef;
-
 
   // Calculate the SVG line segments based on data values
   const svgWidth = 700;
@@ -59,17 +77,17 @@ export const Chart = () => {
 
 
   // Generate horizontal lines for each unique y-value
-  const horizontalLines = horizontalLinesList.map(value => {
+  const horizontalLines = horizontalLinesList.map((value, index) => {
     const y = calculateY(value);
-    return <line x1={xOffset} x2={svgWidth} y1={y} y2={y} stroke="#e0e0e0" strokeWidth="1" />;
+    return <line key={index} x1={xOffset} x2={svgWidth} y1={y} y2={y} stroke="#e0e0e0" strokeWidth="1" />;
   });
 
 
   // Generate y-axis labels as SVG text elements
-  const yAxisLabels = horizontalLinesList.map(value => {
+  const yAxisLabels = horizontalLinesList.map((value, index) => {
     const y = calculateY(value);
     return (
-      <text x="0" y={y} alignmentBaseline="middle" textAnchor="end" fill="var(--Color-Grey-400, #b8c4ce)" fontSize="15px">
+      <text key={index} x="0" y={y} alignmentBaseline="middle" textAnchor="end" fill="var(--Color-Grey-400, #b8c4ce)" fontSize="15px">
         {value}
       </text>
     );

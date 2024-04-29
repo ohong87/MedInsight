@@ -15,7 +15,7 @@ import { jwtDecode } from 'jwt-decode';
 
 export const Dashboard: React.FC = () => {
   const { mutate: logOut } = useLogout();
-  const [healthMetricsData, setHealthMetricsData] = useState<any[]>([]);
+  const [healthMetricsData, setHealthMetricsData] = useState<any[][]>([]);
 
   const [selectedIndices, setSelectedIndices] = useState([]);
   const selectedData = selectedIndices.map(index => healthMetricsData[index]);
@@ -61,13 +61,16 @@ export const Dashboard: React.FC = () => {
         });
         const data = await response.json();
         setHealthMetricsData(data.tests);
+        console.log(healthMetricsData)
         console.log(data.tests);
       } catch(error){
         console.error('Error fetching user tests:', error);
       }
     }
     fetchUserData();
-  }, [selectedIndices, selectedData]);
+    // console.log(selectedIndices);
+    // console.log(selectedData);
+  }, [selectedIndices]);
   
   const handleFileUpload = async (file: File) => {
     if (userId === null) {
@@ -131,7 +134,7 @@ export const Dashboard: React.FC = () => {
       />
       
       <Box sx={{ display: 'flex', flexDirection: 'row', height: '75%', width: '97%', gap: '1%', justifyContent: "center" }}>
-          <HealthMetricsPanel onSelectionChange={setSelectedIndices as Dispatch<SetStateAction<number[]>>} data={healthMetricsData.map(data => ({ ...data, name: data.name.toString() }))} />
+          <HealthMetricsPanel onSelectionChange={setSelectedIndices as Dispatch<SetStateAction<number[]>>} data={healthMetricsData.map(data => ({ ...data[data.length - 1], name: data[data.length - 1].name.toString() }))} />
         
           {selectedIndices.length > 0 && (
             <>
@@ -139,11 +142,14 @@ export const Dashboard: React.FC = () => {
                 {selectedIndices.length > 0 && 
                   selectedData.map((data, index) => {
                     // console.log(`selectedData ${index}`, data, '\n');
-                    return data ? <ReferenceRanges key={index} props={data} /> : null; 
+                    return data ? <ReferenceRanges key={index} props={data[data.length - 1]}/> : null; 
                 })}
               </Box>
               <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '10px', }}>
-                {selectedData.map((_, index) => ( <Chart key={index} /> ))}
+                {selectedData.map((data, index) => {
+                  //console.log(`selectedData ${index}`, data, '\n');
+                  return <Chart key={index} props={data} /> // Pass each inner array as props to Chart
+                })}
               </Box>
             </>
           )}

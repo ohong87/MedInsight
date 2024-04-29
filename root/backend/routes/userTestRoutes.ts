@@ -200,7 +200,7 @@ router.post('/get-test/', async (req: Request, res: any) => {
     const testName = String(req.body.testName); // Extract the testName from the request body and ensure it is a string
     const userId = req.body.userId; // Extract the userId from the request body
 
-    console.log("we reached this point"); // Debugging statement to confirm the endpoint is reached
+    //console.log("we reached this point"); // Debugging statement to confirm the endpoint is reached
 
     try {
         const user = await User.findOne({ uid: userId }); // Look up the user in the database by the unique userId
@@ -241,10 +241,25 @@ router.post('/get-tests', async (req: Request, res: any) => {
         const tests = user.tests;  // Retrieve the tests array from the found user document
         console.log(`${userId} has ${tests.length} test/s`);  // Log the number of tests found for debugging purposes
 
+        // Group the tests by name into dictionary
+        const testsByName: { [name: string]: typeof tests } = {};
+        tests.forEach(test => {
+            if(!testsByName[test.name]) {
+                testsByName[test.name] = [];
+            }
+            testsByName[test.name].push(test);
+        });
+        // Sort each array in the dictionary by ascending order
+        for(const name in testsByName) {
+            testsByName[name].sort((a, b) => a.date.getTime() - b.date.getTime());
+        }
+        // Create a 2D array with the values
+        const array2D = Object.values(testsByName);
+
         const response = {
             "userId": userId,  // Include the userId in the response
             "length": tests.length,  // Include the count of tests
-            "tests": tests  // Include the array of tests
+            "tests": array2D  // Include the array of test arrays
         };
         res.send(response);  // Send the constructed response object with the tests information
     } catch (error) {
