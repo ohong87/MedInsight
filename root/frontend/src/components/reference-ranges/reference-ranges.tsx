@@ -10,7 +10,7 @@ export interface BarChartProps {
     highRefPercentage: string;
     value: string;
     description: string;
-  }
+}
 
 interface ReferenceRangesProps {
     props: BarChartProps;
@@ -22,7 +22,7 @@ export const ReferenceRanges: React.FC<ReferenceRangesProps> = ({ props }) => {
 
     if(props === undefined) {
         return;
-     }
+    }
 
     const handleLowReferenceChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const value: number = Number(event.target.value);
@@ -31,7 +31,6 @@ export const ReferenceRanges: React.FC<ReferenceRangesProps> = ({ props }) => {
         } else {
             setLowReference(event.target.value);
         }
-        props.lowRefPercentage = lowReference;
     };
     
     const handleHighReferenceChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -41,7 +40,6 @@ export const ReferenceRanges: React.FC<ReferenceRangesProps> = ({ props }) => {
         } else {
             setHighReference(event.target.value);
         }
-        props.highRefPercentage = highReference;
     };
 
     return (
@@ -57,7 +55,7 @@ export const ReferenceRanges: React.FC<ReferenceRangesProps> = ({ props }) => {
                     <TextField label="myHighRef%" variant="outlined" value={highReference} onChange={handleHighReferenceChange} />
                 </Box>
                 {/* Right side for the bar chart */}
-                <BarChart {...props} />
+                <BarChart {...props} lowRefPercentage={lowReference} highRefPercentage={highReference}/>
             </Box>
         </Box>
     );

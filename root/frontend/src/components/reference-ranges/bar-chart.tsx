@@ -8,8 +8,8 @@ export const BarChart = (props: BarChartProps) => {
     const minValue = 0;
     const range = maxValue - minValue;
 
-    const lowReference = (Number(props.lowRefPercentage)/100 + 1) * Number(props.lowRef);
-    const highReference = Number(props.highRefPercentage)/100 * Number(props.highRefPercentage);
+    const lowReference = (Number(props.lowRefPercentage)/100 + 0.5) * Number(props.lowRef);
+    const highReference = Number(props.highRefPercentage)/100 * Number(props.highRef);
     
     const calculateHeight = (value: string | number) => {
       const percentage = (Number(value) - minValue) / range;

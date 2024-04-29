@@ -28,8 +28,8 @@ export const Chart = (data: ChartData) => {
   // One way I could think of is by going from 0 to the max 
 
   // !!!!! CHANGE THESE !!!!! //
-  let lowMedicalBound = 20;    // change this to whatever the low medical bound is on the specific test
-  let highMedicalBound = 50;  // change this to whatever the high medical bound is on the specific test
+  let lowMedicalBound = Number(data.props[0].lowRef);    // change this to whatever the low medical bound is on the specific test
+  let highMedicalBound = Number(data.props[0].highRef);  // change this to whatever the high medical bound is on the specific test
   ////
 
   let height = Math.ceil((highMedicalBound - lowMedicalBound) / 0.8);
@@ -75,6 +75,7 @@ export const Chart = (data: ChartData) => {
   }
 
   const horizontalLinesList = calculateYAxisIntervals(bottomLine, topLine);
+  console.log(horizontalLinesList);
 
   // const horizontalLinesList = [150, 140, 130, 120, 110, 100, 90, 80, 70, 60, 50, 40, 30, 20, 10, 0];
 
@@ -87,13 +88,18 @@ export const Chart = (data: ChartData) => {
   // myLowRef and myHighRef inputs as percentage of total height of chart (need to write logic to calculate these values based on user data)
   // This is assuming all of the tests of the same name have the same lowRefPrecentage and highRefPercentage
   const myLowRefInput = Number(data.props[0].lowRefPercentage);
-  const myHighRefInput = Number(data.props[0].highRefPercentage);
+  console.log(myLowRefInput);
+  const myHighRefInput = 100 - Number(data.props[0].highRefPercentage);
+  console.log(myHighRefInput);
   //////////////////////////
 
   // Calculate height of each section in the chart
   height = horizontalLinesList[horizontalLinesList.length - 1] - horizontalLinesList[0];
+  console.log(height);
   let topDarkBlue = ((horizontalLinesList[horizontalLinesList.length - 1] - highMedicalBound) / height * 100);
+  console.log(topDarkBlue);
   let bottomDarkBlue = ((lowMedicalBound - horizontalLinesList[0]) / height * 100);
+  console.log(bottomDarkBlue);
   let myLowRef = (myLowRefInput * lowMedicalBound) / height;
   let myHighRef = (myHighRefInput * highMedicalBound) / height;
   let greySection = 100 - (topDarkBlue + bottomDarkBlue) - (myHighRef + myLowRef);
@@ -185,7 +191,7 @@ export const Chart = (data: ChartData) => {
             <Box sx={{        // top dark blue box
               position: "relative", width: svgWidth - xOffset,
               mt: '20px', ml: xOffset + 'px', 
-              height: `${myHighRef}%`, 
+              height: `${topDarkBlue}%`, 
               backgroundColor: "rgba(44, 79, 111, .5)", 
               borderRadius: "0px 0px 0px 0px"
             }} />
