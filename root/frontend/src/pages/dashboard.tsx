@@ -142,15 +142,15 @@ export const Dashboard: React.FC = () => {
                 {selectedIndices.length > 0 && 
                   selectedData.map((data, index) => {
                     // console.log(`selectedData ${index}`, data, '\n');
-                    return data ? <ReferenceRanges key={index} props={data[data.length - 1]}/> : null; 
+                    return data ? <ReferenceRanges key={index} props={data}/> : null; 
                 })}
               </Box>
-              <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '10px', }}>
+              {/* <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '10px', }}>
                 {selectedData.map((data, index) => {
                   //console.log(`selectedData ${index}`, data, '\n');
                   return <Chart key={index} props={data} /> // Pass each inner array as props to Chart
                 })}
-              </Box>
+              </Box> */}
             </>
           )}
         </Box>

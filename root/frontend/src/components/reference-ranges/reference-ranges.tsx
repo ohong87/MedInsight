@@ -1,24 +1,27 @@
 import React, { useState } from 'react';
 import { Box, Typography, TextField } from '@mui/material';
 import { BarChart } from './bar-chart';
+import { Chart, ChartData } from 'components/chart/chart';
 
-export interface BarChartProps {
+export interface ChartProps {
     name: string;
+    value: string;
     lowRef: string;
     highRef: string;
     lowRefPercentage: string;
     highRefPercentage: string;
-    value: string;
-    description: string;
+    unit: string;
+    date: string;
 }
 
 interface ReferenceRangesProps {
-    props: BarChartProps;
+    props: ChartProps[];
 }
 
 export const ReferenceRanges: React.FC<ReferenceRangesProps> = ({ props }) => {
-    const [lowReference, setLowReference] = useState(props?.lowRefPercentage);
-    const [highReference, setHighReference] = useState(props?.highRefPercentage);   
+    const [lowReference, setLowReference] = useState(props[props.length - 1]?.lowRefPercentage);
+    const [highReference, setHighReference] = useState(props[props.length - 1]?.highRefPercentage);
+    const [chartData, setChartData] = useState<ChartProps[]>(props);
 
     if(props === undefined) {
         return;
@@ -26,27 +29,54 @@ export const ReferenceRanges: React.FC<ReferenceRangesProps> = ({ props }) => {
 
     const handleLowReferenceChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const value: number = Number(event.target.value);
+        const updatedData = [...props];
         if(value < 0 ||value > 100) {
             setLowReference('5');
+            setChartData(prevData => {
+                const updatedData = [...prevData];
+                updatedData[0].lowRefPercentage = '5';
+                return updatedData;
+            });
         } else {
             setLowReference(event.target.value);
+            setChartData(prevData => {
+                const updatedData = [...prevData];
+                updatedData[0].lowRefPercentage = event.target.value;
+                return updatedData;
+            });
         }
+        
+        console.log(`lowReference: ${event.target.value}`);
     };
     
     const handleHighReferenceChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const value: number = Number(event.target.value);
+        const updatedData = [...props];
         if(value < 0 ||value > 100) {
-            setHighReference('50');
+            setHighReference('90');
+            setChartData(prevData => {
+                const updatedData = [...prevData];
+                updatedData[0].highRefPercentage = '90';
+                return updatedData;
+            });
         } else {
             setHighReference(event.target.value);
+            setChartData(prevData => {
+                const updatedData = [...prevData];
+                updatedData[0].highRefPercentage = event.target.value;
+                return updatedData;
+            });
         }
+        
+        console.log(`highReference: ${event.target.value}`);
     };
 
     return (
+        <Box>
         <Box sx={{ backgroundColor: '#fff', height: "33%", width: "100%", borderRadius: '10px', overflow: 'hidden'}}>
             {/* HEADER */}
             <Typography variant="h6" component="div" sx={{ ml: 2.2, pt:1, pb:2 }}>
-                {props.name}
+                {props[props.length - 1].name}
             </Typography>
             {/* CONTENT SECTION */}
             <Box sx={{borderColor: '#FFFFFF', pl:2, pr:2, display: 'flex', alignItems: 'center', gap: 2 }}>
@@ -55,8 +85,13 @@ export const ReferenceRanges: React.FC<ReferenceRangesProps> = ({ props }) => {
                     <TextField label="myHighRef%" variant="outlined" value={highReference} onChange={handleHighReferenceChange} />
                 </Box>
                 {/* Right side for the bar chart */}
-                <BarChart {...props} lowRefPercentage={lowReference} highRefPercentage={highReference}/>
+                <BarChart {...props[props.length - 1]} lowRefPercentage={lowReference} highRefPercentage={highReference}/>
             </Box>
         </Box>
+        <Box>
+            <Chart chartprops={chartData}></Chart>
+        </Box>
+        </Box>
+
     );
 };

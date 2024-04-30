@@ -14,7 +14,7 @@ export interface ChartProps {
 }
 
 export interface ChartData {
-  props: ChartProps[];
+  chartprops: ChartProps[];
 }
 
 export const Chart = (data: ChartData) => {
@@ -28,8 +28,8 @@ export const Chart = (data: ChartData) => {
   // One way I could think of is by going from 0 to the max 
 
   // !!!!! CHANGE THESE !!!!! //
-  let lowMedicalBound = Number(data.props[0].lowRef);    // change this to whatever the low medical bound is on the specific test
-  let highMedicalBound = Number(data.props[0].highRef);  // change this to whatever the high medical bound is on the specific test
+  let lowMedicalBound = Number(data.chartprops[0].lowRef);    // change this to whatever the low medical bound is on the specific test
+  let highMedicalBound = Number(data.chartprops[0].highRef);  // change this to whatever the high medical bound is on the specific test
   ////
 
   let height = Math.ceil((highMedicalBound - lowMedicalBound) / 0.8);
@@ -81,25 +81,25 @@ export const Chart = (data: ChartData) => {
 
   // Contains chart's data points
   // Populate the userData points
-  const userData = data.props.map(d => Number(d.value));
+  const userData = data.chartprops.map(d => Number(d.value));
 
-  console.log(userData);
+  //console.log(userData);
 
   // myLowRef and myHighRef inputs as percentage of total height of chart (need to write logic to calculate these values based on user data)
   // This is assuming all of the tests of the same name have the same lowRefPrecentage and highRefPercentage
-  const myLowRefInput = Number(data.props[0].lowRefPercentage);
-  console.log(myLowRefInput);
-  const myHighRefInput = 100 - Number(data.props[0].highRefPercentage);
-  console.log(myHighRefInput);
+  const myLowRefInput = Number(data.chartprops[0].lowRefPercentage);
+  //console.log(myLowRefInput);
+  const myHighRefInput = 100 - Number(data.chartprops[0].highRefPercentage);
+  //console.log(myHighRefInput);
   //////////////////////////
 
   // Calculate height of each section in the chart
   height = horizontalLinesList[horizontalLinesList.length - 1] - horizontalLinesList[0];
-  console.log(height);
+  //console.log(height);
   let topDarkBlue = ((horizontalLinesList[horizontalLinesList.length - 1] - highMedicalBound) / height * 100);
-  console.log(topDarkBlue);
+  //console.log(topDarkBlue);
   let bottomDarkBlue = ((lowMedicalBound - horizontalLinesList[0]) / height * 100);
-  console.log(bottomDarkBlue);
+  //console.log(bottomDarkBlue);
   let myLowRef = (myLowRefInput * lowMedicalBound) / height;
   let myHighRef = (myHighRefInput * highMedicalBound) / height;
   let greySection = 100 - (topDarkBlue + bottomDarkBlue) - (myHighRef + myLowRef);
@@ -152,7 +152,7 @@ export const Chart = (data: ChartData) => {
   });
   
   
-  
+
   return (
 <Box sx={{ width: "100%", height: "21.9%", justifyContent: "center", backgroundColor: "var(--Surface-card, #fff)", display: "flex", flexDirection: "column", fontSize: "10px", color: "var(--Color-Grey-400, #b8c4ce)", fontWeight: 400, textAlign: "right", lineHeight: "100%", padding: "40px 0 40px 0", "@media (max-width: 991px)": { whiteSpace: "initial", }, borderRadius: "10px" }} >
       <Box sx={{ position: "relative", justifyContent: "center", display: "flex", width: "720px", flexDirection: "column", padding: "0 16px", "@media (max-width: 991px)": { maxWidth: "100%", whiteSpace: "initial", }, }} >

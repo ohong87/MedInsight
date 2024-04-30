@@ -1,15 +1,21 @@
 import React from "react";
 import { Box, Typography } from '@mui/material';
-import { BarChartProps } from "./reference-ranges";
+import { ChartProps } from "./reference-ranges";
 
-export const BarChart = (props: BarChartProps) => {
+export const BarChart = (props: ChartProps) => {
     const maxHeight = 150
     const maxValue = Number(props.highRef)
     const minValue = 0;
     const range = maxValue - minValue;
 
+    //console.log(`highReferencePerc: ${props.highRefPercentage}`);
+    //console.log(`lowReferencePerc: ${props.lowRefPercentage}`);
+
     const lowReference = (Number(props.lowRefPercentage)/100 + 0.5) * Number(props.lowRef);
     const highReference = Number(props.highRefPercentage)/100 * Number(props.highRef);
+
+    console.log(`maxHeight - highref: ${maxHeight - highReference}`);
+    console.log(`highRef: ${highReference}`);
     
     const calculateHeight = (value: string | number) => {
       const percentage = (Number(value) - minValue) / range;
@@ -21,13 +27,13 @@ export const BarChart = (props: BarChartProps) => {
         <Box sx={{display: 'flex', flexDirection: 'column-reverse', height: maxHeight, alignItems: 'flex-start' }}>
               <Box sx={{ width: 39, height: calculateHeight(props.lowRef), bgcolor: '#2c4f6f', borderBottomLeftRadius: '8px', borderBottomRightRadius: '8px', pb:3, mb:2}} />
               <Box sx={{ width: 39, height: calculateHeight(lowReference), bgcolor: '#88bedc' }} />
-              <Box sx={{ width: 39, height: calculateHeight(lowReference), bgcolor: '#e0e0e0' }} />
-                <Box sx={{ width: 39, height: calculateHeight(props.value), bgcolor: '#94e19c' }}>
+              <Box sx={{ width: 39, height: calculateHeight(maxHeight - lowReference), bgcolor: '#e0e0e0' }} />
+                <Box sx={{ width: 39, height: calculateHeight(30), bgcolor: '#94e19c' }}>
                   <Typography sx={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
                     {props.value}
                   </Typography>
                 </Box>
-              <Box sx={{ width: 39, height: calculateHeight(props.lowRef), bgcolor: '#e0e0e0' }} />
+              <Box sx={{ width: 39, height: calculateHeight(maxHeight - highReference), bgcolor: '#e0e0e0' }} />
               <Box sx={{ width: 39, height: calculateHeight(highReference), bgcolor: '#88bedc' }} />
               <Box sx={{ width: 39, height: calculateHeight(props.highRef), bgcolor: '#2c4f6f', borderTopLeftRadius: '8px', borderTopRightRadius: '8px'   }} />
         </Box>
