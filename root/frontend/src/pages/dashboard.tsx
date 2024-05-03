@@ -5,7 +5,6 @@ import { Welcome } from "../components/welcome";
 import { NavigationItem } from "../components/navigation-item";
 import { HealthMetricsPanel } from "components/health-metrics";
 import { ReferenceRanges } from "components/reference-ranges/reference-ranges";
-import { Chart } from "components/chart/chart";
 
 import home from "../icons/home.png";
 import { useLogout } from "@refinedev/core";
@@ -138,7 +137,7 @@ export const Dashboard: React.FC = () => {
         
           {selectedIndices.length > 0 && (
             <>
-              <Box sx={{ width: "35%", display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '10px'}}>
+              <Box sx={{ width: "75%", display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '10px'}}>
                 {selectedIndices.length > 0 && 
                   selectedData.map((data, index) => {
                     // console.log(`selectedData ${index}`, data, '\n');
@@ -148,7 +147,7 @@ export const Dashboard: React.FC = () => {
               {/* <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '10px', }}>
                 {selectedData.map((data, index) => {
                   //console.log(`selectedData ${index}`, data, '\n');
-                  return <Chart key={index} props={data} /> // Pass each inner array as props to Chart
+                  return <Chart key={index} chartprops={chartData} /> // Pass each inner array as props to Chart
                 })}
               </Box> */}
             </>

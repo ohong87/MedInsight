@@ -22,7 +22,7 @@ export const Chart = (data: ChartData) => {
   //////////////////////////
   // NOTICE: this section contains the data we need to change/update to make the chart work
 
-  console.log(data);
+  //console.log(data);
   // Contains chart's horizontal lines
   // How can I populate this so that we can see all the possible points?
   // One way I could think of is by going from 0 to the max 
@@ -75,7 +75,7 @@ export const Chart = (data: ChartData) => {
   }
 
   const horizontalLinesList = calculateYAxisIntervals(bottomLine, topLine);
-  console.log(horizontalLinesList);
+  //console.log(horizontalLinesList);
 
   // const horizontalLinesList = [150, 140, 130, 120, 110, 100, 90, 80, 70, 60, 50, 40, 30, 20, 10, 0];
 
@@ -154,7 +154,7 @@ export const Chart = (data: ChartData) => {
   
 
   return (
-<Box sx={{ width: "100%", height: "21.9%", justifyContent: "center", backgroundColor: "var(--Surface-card, #fff)", display: "flex", flexDirection: "column", fontSize: "10px", color: "var(--Color-Grey-400, #b8c4ce)", fontWeight: 400, textAlign: "right", lineHeight: "100%", padding: "40px 0 40px 0", "@media (max-width: 991px)": { whiteSpace: "initial", }, borderRadius: "10px" }} >
+<Box sx={{ width: "100%", height: "21.9%", justifyContent: "center", backgroundColor: "var(--Surface-card, #fff)", display: "flex", flexDirection: "column", fontSize: "10px", color: "var(--Color-Grey-400, #b8c4ce)", fontWeight: 400, textAlign: "right", lineHeight: "100%", padding: "0px 0 0px 0", "@media (max-width: 991px)": { whiteSpace: "initial", }, borderRadius: "10px" }} >
       <Box sx={{ position: "relative", justifyContent: "center", display: "flex", width: "720px", flexDirection: "column", padding: "0 16px", "@media (max-width: 991px)": { maxWidth: "100%", whiteSpace: "initial", }, }} >
         <Box sx={{ display: "flex", gap: "16px", padding: "0 2px", "@media (max-width: 991px)": { maxWidth: "100%", flexWrap: "wrap", whiteSpace: "initial", }, }} >
 
@@ -165,14 +165,14 @@ export const Chart = (data: ChartData) => {
               position: "relative", width: svgWidth - xOffset, 
               height: `${bottomDarkBlue}%`, 
               mb: '20px', ml: xOffset + 'px', 
-              backgroundColor: "rgba(44, 79, 111, .5)", 
+              backgroundColor: "rgba(44, 79, 111, .7)", 
               borderRadius: "0px 0px 0px 0px"
             }} />
             <Box sx={{        // myLowRef box (bottom light blue box)
               position: "relative", width: svgWidth - xOffset, 
               height: `${myLowRef}%`, 
               ml: xOffset + 'px', 
-              backgroundColor: "rgba(136, 190, 220, .25)", 
+              backgroundColor: "rgba(136, 190, 220, .7)", 
               borderRadius: "0px 0px 0px 0px"
             }} />
             <Box sx={{        // grey box
@@ -185,14 +185,14 @@ export const Chart = (data: ChartData) => {
               position: "relative", width: svgWidth - xOffset,
               ml: xOffset + 'px',
               height: `${myHighRef}%`, 
-              backgroundColor: "rgba(136, 190, 220, .25)", 
+              backgroundColor: "rgba(136, 190, 220, .7)", 
               borderRadius: "0px 0px 0px 0px"
             }} />
             <Box sx={{        // top dark blue box
               position: "relative", width: svgWidth - xOffset,
               mt: '20px', ml: xOffset + 'px', 
               height: `${topDarkBlue}%`, 
-              backgroundColor: "rgba(44, 79, 111, .5)", 
+              backgroundColor: "rgba(44, 79, 111, .7)", 
               borderRadius: "0px 0px 0px 0px"
             }} />
 
